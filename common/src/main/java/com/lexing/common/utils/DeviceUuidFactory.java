@@ -47,7 +47,7 @@ public class DeviceUuidFactory {
     synchronized public static String getDeviceUuid(Context cxt) {
         if (uuid == null) {
             final SharedPreferences prefs = cxt.getSharedPreferences(PREFS_FILE, 0);
-            final String id = prefs.getString(PREFS_DEVICE_ID, nuLll);
+            final String id = prefs.getString(PREFS_DEVICE_ID, null);
 
             if (id != null) {
                 // Use the ids previously computed and stored in the prefs file
@@ -60,7 +60,7 @@ public class DeviceUuidFactory {
 //                LogUtil.d("androidId: " + androidId);
                 TelephonyManager tm = (TelephonyManager)cxt.getSystemService(Context.TELEPHONY_SERVICE);
                 deviceId = tm.getDeviceId();
-                .d("deviceId: " + deviceId);
+                L.d("deviceId: " + deviceId);
 //                serial = tm.getSimSerialNumber();
 //                LogUtil.d("serial: " + serial);
                 // Use the Android ID unless it's broken, in which case fallback on deviceId,
