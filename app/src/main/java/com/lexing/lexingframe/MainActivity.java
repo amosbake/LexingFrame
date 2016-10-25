@@ -3,7 +3,7 @@ package com.lexing.lexingframe;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.lexing.common.utils.L;
+import com.lexing.common.assist.L;
 
 public class MainActivity extends AppCompatActivity {
 

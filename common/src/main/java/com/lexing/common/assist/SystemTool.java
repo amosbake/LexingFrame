@@ -1,4 +1,4 @@
-package com.lexing.common.utils;
+package com.lexing.common.assist;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -21,6 +21,8 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
+
+import com.lexing.common.utils.StringUtils;
 
 import java.io.File;
 import java.security.MessageDigest;

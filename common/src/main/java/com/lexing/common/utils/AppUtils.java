@@ -167,6 +167,13 @@ public final class AppUtils {
         }
     }
 
+    /**
+     * check application installation state
+     *
+     * @param context current context
+     * @param packageName target application's package name
+     *
+     * **/
     public static boolean isInstalled(Context context, String packageName) {
         boolean installed = false;
         if (TextUtils.isEmpty(packageName)) {
@@ -184,6 +191,11 @@ public final class AppUtils {
         return installed;
     }
 
+    /**
+     * install apk through certain path
+     * @param context current context
+     * @param filePath apk's file path
+     */
     public static boolean installApk(Context context, String filePath) {
         File file = new File(filePath);
         if (!file.exists() || !file.isFile() || file.length() <= 0) {
@@ -208,7 +220,9 @@ public final class AppUtils {
 
 
     /**
-     * className "com.xxx.xx..XXXService"
+     * check certain service running state
+     * @param context current context
+     * @param className className "com.xxx.xx..XXXService"
      */
     public static boolean isServiceRunning(Context context, String className) {
         boolean isRunning = false;
@@ -222,6 +236,11 @@ public final class AppUtils {
         return isRunning;
     }
 
+    /**
+     * stop certain service
+     * @param context current context
+     * @param className className "com.xxx.xx..XXXService"
+     */
     public static boolean stopRunningService(Context context, String className) {
         Intent intent_service = null;
         boolean ret = false;
@@ -323,8 +342,8 @@ public final class AppUtils {
         return sRet;
     }
 
-    public static void runApp(Context context, String packagename) {
-        context.startActivity(new Intent(context.getPackageManager().getLaunchIntentForPackage(packagename)));
+    public static void runApp(Context context, String packageName) {
+        context.startActivity(new Intent(context.getPackageManager().getLaunchIntentForPackage(packageName)));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.lexing.common.utils;
+package com.lexing.common.assist;
 
 /**
  * Created by Ray on 2015/4/8 0008.

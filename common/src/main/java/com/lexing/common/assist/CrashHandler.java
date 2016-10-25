@@ -32,7 +32,7 @@ import java.util.Date;
  *         CrashHandler.SAVE_CRASH_LOG = true;
  *         CrashHandler.attach(this);
  *     }
- * }
+ * }`
  * <b>创建时间</b> 2014-7-2
  */
 public class CrashHandler implements UncaughtExceptionHandler {

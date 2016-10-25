@@ -1,4 +1,4 @@
-package com.lexing.common.utils;
+package com.lexing.common.assist;
 
 import android.text.TextUtils;
 import android.util.Log;
