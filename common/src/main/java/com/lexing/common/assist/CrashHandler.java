@@ -1,4 +1,4 @@
-package com.lexing.common.utils;
+package com.lexing.common.assist;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.lexing.common.base.ActivityStack;
+import com.lexing.common.utils.FileUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;

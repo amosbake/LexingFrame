@@ -24,7 +24,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
 import java.security.MessageDigest;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -281,31 +280,6 @@ public final class SystemTool {
         }
         L.d((getDeviceUsableMemory(cxt) - i) + "MB memory cleaned");
         return count;
-    }
-
-    /**
-     * 判断list是否为空
-     *
-     * @param list
-     * @return 是否为空
-     */
-    @Deprecated
-    public static boolean isArrayNullOrEmpty(List list) {
-        if (list != null && list.size() != 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * 判断集合是否为空
-     *
-     * @param list
-     * @return 是否为空
-     */
-    public static boolean isCollectionNullOrEmpty(Collection list) {
-        return list == null || list.isEmpty();
     }
 
     /**
