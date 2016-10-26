@@ -19,6 +19,7 @@ LexingFrame provides general purpose utilities for Android projects.focus on eff
 模块的 build.gradle 文件中添加
 ```gradle
     compile 'com.lexing.common:common:0.0.6'
+    compile 'com.lexing.common:badgeview:0.1.0'
 ```
 
 ## 添加Permission
