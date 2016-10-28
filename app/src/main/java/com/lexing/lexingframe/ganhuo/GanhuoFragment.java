@@ -53,11 +53,11 @@ public class GanhuoFragment extends Fragment {
 
     private void initViews(View rootView) {
         mRecyclerView = (XRecyclerView)rootView.findViewById(R.id.recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallBeat);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-        View header = LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_header, (ViewGroup)getActivity().findViewById(android.R.id.content),false);
+        View header = LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_header, (ViewGroup)getActivity().findViewById(R.id.container),false);
         mRecyclerView.addHeaderView(header);
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -73,6 +73,7 @@ public class GanhuoFragment extends Fragment {
         });
         mAdapter=new AndroidAdapter(mRecyclerView,null,R.layout.item_ganhuo_android);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setPullRefreshEnabled(true);
         mRecyclerView.setLoadingMoreEnabled(true);
         mRecyclerView.setRefreshing(true);
     }
@@ -106,10 +107,11 @@ public class GanhuoFragment extends Fragment {
                         if (index!=1){
                             mAdapter.addAll(ganhuoAndroids);
                             mRecyclerView.loadMoreComplete();
+                            mAdapter.notifyDataSetChanged();
                         }else {
-                            mAdapter.clear();
-                            mAdapter.addAll(ganhuoAndroids);
+                            mAdapter.refresh(ganhuoAndroids);
                             mRecyclerView.refreshComplete();
+                            mAdapter.notifyDataSetChanged();
 //                            mRecyclerView.smoothScrollToPosition(1);
                         }
 

@@ -3,7 +3,6 @@ package com.lexing.lrecyclerview.adapter;
 import android.animation.Animator;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -123,20 +122,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     @Override
     public void add(@NonNull T item) {
         datas.add(item);
-        int location = datas.size() - 1;
-        notifyItemInserted(location);
     }
 
-    @Override
-    public void add(@IntRange(from = 0) int location, @NonNull T item) {
-        datas.add(location, item);
-        notifyItemInserted(location);
-    }
-
-    @Override
-    public void insert(@IntRange(from = 0) int location, @NonNull T item) {
-        add(location, item);
-    }
 
     @Override
     public void addAll(List<T> items) {
@@ -144,64 +131,24 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             Log.w(TAG, "addAll: The list you passed contains no elements.");
             return;
         }
-        int location = getItemCount();
         datas.addAll(items);
-        notifyItemRangeInserted(location, items.size());
-    }
-
-    @Override
-    public void addAll(@IntRange(from = 0) int location, List<T> items) {
-        if (items == null || items.isEmpty()) {
-            Log.w(TAG, "addAll: The list you passed contains no elements.");
-            return;
-        }
-        if (location < 0 || location > getItemCount()) {
-            Log.w(TAG, "addAll: IndexOutOfBoundsException");
-            return;
-        }
-        datas.addAll(items);
-        notifyItemRangeInserted(location, items.size());
     }
 
     @Override
     public void remove(T item) {
-        if (contains(item)) {
-            remove(datas.indexOf(item));
-        }
-    }
-
-    @Override
-    public void remove(int location) {
-        if (location < 0 || location > getItemCount()) {
-            Log.w(TAG, "addAll: IndexOutOfBoundsException");
-            return;
-        }
-        datas.remove(location);
-        notifyItemRemoved(location);
+        datas.remove(item);
     }
 
     @Override
     public void removeAll(List<T> items) {
         datas.removeAll(items);
-        notifyDataSetChanged();
     }
 
     @Override
     public void retainAll(List<T> items) {
         datas.retainAll(items);
-        notifyDataSetChanged();
     }
 
-    @Override
-    public void set(T oldItem, T newItem) {
-        set(datas.indexOf(oldItem), newItem);
-    }
-
-    @Override
-    public void set(@IntRange(from = 0) int location, T item) {
-        datas.set(location, item);
-        notifyItemChanged(location);
-    }
 
     @Override
     public void replaceAll(List<T> items) {
@@ -211,20 +158,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         }
         if (datas.isEmpty()) {
             addAll(items);
-        } else {
-            int originalSize = getItemCount();
-            int newSize = items.size();
-            datas.clear();
-            datas.addAll(items);
-            if (originalSize > newSize) {
-                notifyItemRangeChanged(0, newSize);
-                notifyItemRangeRemoved(newSize, originalSize - newSize);
-            } else if (originalSize == newSize) {
-                notifyItemRangeChanged(0, newSize);
-            } else {
-                notifyItemRangeChanged(0, originalSize);
-                notifyItemRangeInserted(originalSize, newSize - originalSize);
-            }
         }
     }
 
@@ -243,7 +176,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         int count = getItemCount();
         if (count > 0) {
             datas.clear();
-            notifyItemRangeRemoved(0, count);
         }
     }
 

@@ -18,8 +18,9 @@ LexingFrame provides general purpose utilities for Android projects.focus on eff
 
 模块的 build.gradle 文件中添加
 ```gradle
-    compile 'com.lexing.common:common:0.0.6'
-    compile 'com.lexing.common:badgeview:0.1.0'
+    compile 'com.lexing.common:common:0.2.2'
+    compile 'com.lexing.common:badgeview:1.0.0'
+    compile 'com.lexing.common:lrecyclerview:1.1.0'
 ```
 
 ## 添加Permission
@@ -50,6 +51,83 @@ Class | Introduction
 [Check](https://github.com/amosbake/LexingFrame/blob/master/common/src/main/java/com/lexing/common/assist/Check.java) | 对字符串,集合,数组的判空方法
 [CrashHandler](https://github.com/amosbake/LexingFrame/blob/master/common/src/main/java/com/lexing/common/assist/CrashHandler.java) | 程序错误跳出时给予提示并记录错误报告
 
+## BadgeView
+BadgeView 是一个右上角带有小红点或数字的控件
+```xml
+    <com.lexing.badgeview.BadgeView
+                app:btnBadgeHeight ="14dp"//图标高度
+                app:btnBadgeColor ="@color/colorAccent"//图标颜色
+                android:drawableTop="@mipmap/ic_launcher" //设置图标
+                app:btnBadgeText="2" //设置提示文字 不设置即为小红点 />
+```
+
+## LRecyclerView 
+此模块基于[XRecyclerView](https://github.com/jianghejie/XRecyclerView).
+
+### 设置下拉刷新和加载更多
+```java
+        mRecyclerView.setPullRefreshEnabled(true);
+        mRecyclerView.setLoadingMoreEnabled(true);
+        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+               //刷新数据逻辑
+            }
+
+            @Override
+            public void onLoadMore() {
+                //加载更多逻辑
+            }
+        });
+```
+加载完成后需要手动通知视图完成状态和适配器更新
+```java
+    //loadmore callback complete
+    ......
+    mAdapter.addAll(datas);
+    mRecyclerView.loadMoreComplete();
+    mAdapter.notifyDataSetChanged();
+
+    //refresh callback complete
+    ......
+    mAdapter.refresh(datas);
+    mRecyclerView.refreshComplete();
+    mAdapter.notifyDataSetChanged();
+```
+
+### 设置加载控件样式
+
+```java
+        //下拉刷新进度条样式
+        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader;
+        //加载更多进度条样式
+        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
+        //下拉箭头图形 R.drawable.iconfont_downgrey 为默认样式
+        mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
+```  
 
 
+### 设置列表头部
+如列表是在Fragment中,android.R.id.content也可改成Activity中装载Frangment的容器id 
+可加载多个头部
+```java
+View header =  LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
 
+mRecyclerView.addHeaderView(header);
+```
+
+### 适配器
+
+适配器需要继承`BaseRecyclerAdapter<T>`并实现convert方法,并可对`RecyclerHolder`实现链式设置
+注意:convert 有两个,其中一个有`List<Object> payloads`的参数的是用来实现视图局部刷新的
+```java
+
+    @Override
+    protected void convert(RecyclerHolder holder, GanhuoAndroid item, int position, boolean isScrolling) {
+        holder.setText(R.id.tvTitle,item.desc)
+                .setText(R.id.tvAuthor,item.author)
+                .setText(R.id.tvUrl,item.url)
+                .itemView.setBackgroundColor(getRandomColor(position));
+    }
+
+```

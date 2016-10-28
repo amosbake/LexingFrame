@@ -8,6 +8,7 @@ import com.lexing.lrecyclerview.adapter.BaseRecyclerAdapter;
 import com.lexing.lrecyclerview.adapter.RecyclerHolder;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,6 +19,11 @@ public class AndroidAdapter extends BaseRecyclerAdapter<GanhuoAndroid> {
 
     public AndroidAdapter(RecyclerView v, Collection<GanhuoAndroid> datas, int itemLayoutId) {
         super(v, datas, itemLayoutId);
+    }
+
+    @Override
+    protected void convert(RecyclerHolder holder, GanhuoAndroid item, int position, boolean isScrolling, List<Object> payloads) {
+        super.convert(holder, item, position, isScrolling, payloads);
     }
 
     @Override
