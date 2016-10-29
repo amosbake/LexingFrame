@@ -4,7 +4,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
+import rx.Single;
 
 /**
  * Author: mopel
@@ -13,6 +13,6 @@ import rx.Observable;
 public interface GanhuoService {
 
     @GET("Android/{size}/{index}")
-    Observable<GanhuoData<List<GanhuoAndroid>>> fetchAndroidGanhuo(
+    Single<GanhuoData<List<GanhuoAndroid>>> fetchAndroidGanhuo(
             @Path("size") int pageSize, @Path("index") int pageIndex);
 }

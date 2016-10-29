@@ -117,7 +117,7 @@ mRecyclerView.addHeaderView(header);
 ```
 
 ### 适配器
-
+#### 简单适配器(列表中只有一种视图类型)
 适配器需要继承`BaseRecyclerAdapter<T>`并实现convert方法,并可对`RecyclerHolder`实现链式设置
 注意:convert 有两个,其中一个有`List<Object> payloads`的参数的是用来实现视图局部刷新的
 ```java
@@ -129,5 +129,47 @@ mRecyclerView.addHeaderView(header);
                 .setText(R.id.tvUrl,item.url)
                 .itemView.setBackgroundColor(getRandomColor(position));
     }
-
 ```
+#### 多类型列表适配器
+首先: 让每个需要列表展示的数据类都`implements Item`
+```java
+ublic class TitleData implements Item {
+    public TitleData(String title) {
+        this.title = title;
+    }
+
+    String title;
+}
+```
+创建将数据类与相关的视图ViewHolder链接起来的`ItemViewProvider`
+```java
+public class TitleItemProvider extends ItemViewProvider<TitleData, RecyclerHolder> {
+
+    @NonNull
+    @Override
+    protected RecyclerHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_time, parent, false);
+        return new RecyclerHolder(root);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull RecyclerHolder holder, @NonNull TitleData titleData) {
+        ((TextView)holder.itemView).setText(titleData.title);
+    }
+}
+```
+为你的适配器注册帮助类并设置到RecyclerView中,注意List中的所有数据类都必须注册到适配器上.
+```java
+        mMultiTypeAdapter=new MultiTypeAdapter(getInitDatas());
+        mMultiTypeAdapter.applyGlobalMultiTypePool();
+        mMultiTypeAdapter.register(ImageDatas.class,new ImageItemProvider());
+        mMultiTypeAdapter.register(TitleData.class,new TitleItemProvider());
+        mRecyclerView.setAdapter(mMultiTypeAdapter);
+```
+
+## 示例项目
+#### ganhuo:  Rxjava+retrofit
+`ExecutorManager`提供基于手机cpu数量大小的线程池
+`SchedlersCompat`使得线程调度的写法更加简洁
+`ServiceGenerator`是提供`Retrofit`网络服务的一般性写法,使用时只用加上主域名和接口api即可使用
+
