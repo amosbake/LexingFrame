@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsbridge demo</title>
+    <script type="text/javascript" src="jsbridge.js"></script>
+    <script type="text/javascript">
+        //点击button调用native
+        function callNative() {
+            JsBridge.callNative('getUserName', {id: 1, type: "类型"}, function (data) {
+                alert(JSON.stringify(data));
+            });
+        }
+        //注册方法给native调用
+        JsBridge.registerHandler('getColorNeedTime', function (req, res) {
+            console.log("getColorNeedTime req:" + JSON.stringify(req));
+            //可做网络操作后send
+            res.send(new JsBridge.Response(0, "ok", {color: "red", like: 100}));
+        });
+        JsBridge.registerHandler('getRemoteServerAddress', function (req, res) {
+            console.log("getRemoteServerAddress req:" + JSON.stringify(req));
+            res.send(new JsBridge.Response(0, "ok", {ip: "127.0.0.1"}));
+        });
+    </script>
+</head>
+<body>
+<button onClick="callNative()">调用native方法</button>
+</body>
+</html>
