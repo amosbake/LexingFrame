@@ -11,7 +11,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.lexing.common.base.ActivityStack;
+import com.lexing.common.base.BaseApplication;
 import com.lexing.common.utils.FileUtils;
 
 import java.io.BufferedWriter;
@@ -90,7 +90,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             if(listener != null){
                 listener.onKill();
             }
-            ActivityStack.getInstance().AppExit();
+            BaseApplication.getInstance().exitAllActivity();
             System.exit(0);
         }
     }

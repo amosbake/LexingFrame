@@ -36,7 +36,7 @@ public class ViewInject {
      */
     public static void toast(String msg) {
         try {
-            toast(ActivityStack.getInstance().topActivity(), msg);
+            toast(BaseApplication.getInstance().getApplicationContext(), msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,7 +49,7 @@ public class ViewInject {
      */
     public static void longToast(String msg) {
         try {
-            longToast(ActivityStack.getInstance().topActivity(), msg);
+            longToast(BaseApplication.getInstance().getApplicationContext(), msg);
         } catch (Exception e) {
         }
     }
