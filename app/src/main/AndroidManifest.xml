@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".sample.BadgeActivity">
+        <activity android:name=".badge.BadgeActivity">
             <intent-filter>
                 <action android:name="com.lexing.action.badge"/>
 

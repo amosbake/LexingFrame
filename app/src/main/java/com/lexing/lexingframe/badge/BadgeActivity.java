@@ -1,4 +1,4 @@
-package com.lexing.lexingframe.sample;
+package com.lexing.lexingframe.badge;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;

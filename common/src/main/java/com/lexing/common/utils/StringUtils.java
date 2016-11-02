@@ -1,5 +1,10 @@
 package com.lexing.common.utils;
 
+import android.content.Context;
+import android.support.annotation.StyleRes;
+import android.text.SpannableStringBuilder;
+import android.text.style.TextAppearanceSpan;
+
 import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Random;
@@ -344,6 +349,14 @@ public final class StringUtils {
         return 0;
     }
 
+    /**为指定文本加载样式**/
+    public static SpannableStringBuilder format(Context context, String text, @StyleRes int style){
+        SpannableStringBuilder _builder = new SpannableStringBuilder(text);
+        _builder.setSpan(new TextAppearanceSpan(context,style),0,text.length(),0);
+        return _builder;
+    }
+
+    /**获取中文的大写*/
     public static String getUpCase(int position) {
         return num_lower[position];
     }
