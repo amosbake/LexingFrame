@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class GanhuoData<T> {
     @SerializedName("results")
-    private T data;
-    private boolean error;
+     T data;
+     boolean error;
 
     public T getData() {
         return data;
