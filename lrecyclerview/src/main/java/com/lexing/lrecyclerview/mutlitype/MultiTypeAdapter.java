@@ -58,7 +58,7 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<ViewHolder>
 
     @SuppressWarnings("unchecked") @Override
     public int getItemViewType(int position) {
-        if (position<0){
+        if (position<0 || items.isEmpty() || position>=items.size()){
             return Integer.MAX_VALUE-2;
         }
         Item item = items.get(position);

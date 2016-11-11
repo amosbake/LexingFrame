@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 group = "com.lexing.common"
-version = "0.2.10"
+version = "0.3.1"
 
 android {
     compileSdkVersion 25
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 7
+        versionCode 8
         versionName version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -36,4 +36,4 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
 }
 
-//apply from: 'bintray.gradle'
+apply from: 'bintray.gradle'

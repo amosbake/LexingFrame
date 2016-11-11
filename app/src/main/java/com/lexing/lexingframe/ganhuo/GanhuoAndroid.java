@@ -10,6 +10,22 @@ import java.util.List;
  * Date : 2016/10/9
  */
 public class GanhuoAndroid {
+    public GanhuoAndroid() {
+    }
+
+    public GanhuoAndroid(String id, Date createDate, Date publishDate, String desc, List<String> imgs, String source, String type, String url, String author, boolean used) {
+        this.id = id;
+        this.createDate = createDate;
+        this.publishDate = publishDate;
+        this.desc = desc;
+        this.imgs = imgs;
+        this.source = source;
+        this.type = type;
+        this.url = url;
+        this.author = author;
+        this.used = used;
+    }
+
     @SerializedName("_id")
     String id;
     @SerializedName("createdAt")

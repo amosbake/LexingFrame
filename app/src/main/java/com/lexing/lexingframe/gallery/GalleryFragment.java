@@ -26,7 +26,6 @@ import java.util.List;
 public class GalleryFragment extends Fragment {
 
     private XRecyclerView mRecyclerView;
-//    private GalleryAdapter mAdapter;
     private MultiTypeAdapter mMultiTypeAdapter;
     private int index = 1;
 
@@ -57,7 +56,6 @@ public class GalleryFragment extends Fragment {
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-//        mAdapter = new GalleryAdapter(mRecyclerView,_initDatas.first,_initDatas.second);
 
         mMultiTypeAdapter=new MultiTypeAdapter(getInitDatas());
         mMultiTypeAdapter.applyGlobalMultiTypePool();

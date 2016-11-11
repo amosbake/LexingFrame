@@ -33,11 +33,12 @@ public class IGanhuoPresenterTest {
         RxUnitTestTools.openRxTools();
         mGanhuoView = mock(GanhuoView.class);
         mGanhuoService = mock(GanhuoService.class);
-        mGanhuoPresenter = new GanhuoPresenter(mGanhuoService,mGanhuoView);
+
     }
 
     @Test
     public void refreshGanhuoList() throws Exception {
+        mGanhuoPresenter = new GanhuoPresenter(mGanhuoService,mGanhuoView);
         GanhuoData<List<GanhuoAndroid>> _data = getMockData();
         when(mGanhuoService.fetchAndroidGanhuo(anyInt(),anyInt()))
                 .thenReturn(Single.just(_data));
@@ -50,6 +51,7 @@ public class IGanhuoPresenterTest {
 
     @Test
     public void loadMoreGanhuoList() throws Exception {
+        mGanhuoPresenter = new GanhuoPresenter(mGanhuoService,mGanhuoView);
         GanhuoData<List<GanhuoAndroid>> _data = getMockData();
         when(mGanhuoService.fetchAndroidGanhuo(anyInt(),anyInt()))
                 .thenReturn(Single.just(_data));

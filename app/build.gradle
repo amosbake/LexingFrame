@@ -35,6 +35,7 @@ dependencies {
     compile project(':lrecyclerview')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'javax.inject'
     })
     /**-------  图片加载库  ---------**/
     compile 'com.android.support:appcompat-v7:25.0.0'
