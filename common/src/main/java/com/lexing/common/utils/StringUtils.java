@@ -1,8 +1,11 @@
 package com.lexing.common.utils;
 
 import android.content.Context;
+import android.support.annotation.ColorRes;
 import android.support.annotation.StyleRes;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 
 import java.text.DecimalFormat;
@@ -355,6 +358,14 @@ public final class StringUtils {
         _builder.setSpan(new TextAppearanceSpan(context,style),0,text.length(),0);
         return _builder;
     }
+
+    /**为指定文本染色**/
+    public  SpannableStringBuilder tint(Context context,String text, @ColorRes int color){
+        SpannableStringBuilder _builder = new SpannableStringBuilder(text);
+        _builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context,color)),0,text.length(),0);
+        return _builder;
+    }
+
 
     /**获取中文的大写*/
     public static String getUpCase(int position) {
