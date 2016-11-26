@@ -82,7 +82,6 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<ViewHolder>
         getProviderByIndex(type).onBindViewHolder(holder, onFlattenItem(item));
     }
 
-
     @Override
     public int getItemCount() {
         return items.size();
