@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+group = "com.lexing.common"
+version = "0.8.0"
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"

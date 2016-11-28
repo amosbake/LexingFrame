@@ -21,6 +21,7 @@ LexingFrame provides general purpose utilities for Android projects.focus on eff
     compile 'com.lexing.common:common:0.3.1'
     compile 'com.lexing.common:badgeview:1.0.0'
     compile 'com.lexing.common:lrecyclerview:1.3.2'
+    compile 'com.lexing.common:lprogressbarcollection:0.8.0'
 ```
 
 ## 添加Permission
@@ -172,4 +173,13 @@ public class TitleItemProvider extends ItemViewProvider<TitleData, RecyclerHolde
 `ExecutorManager`提供基于手机cpu数量大小的线程池
 `SchedlersCompat`使得线程调度的写法更加简洁
 `ServiceGenerator`是提供`Retrofit`网络服务的一般性写法,使用时只用加上主域名和接口api即可使用
+
+#### GalleryFragment
+展示MutiType,RecylerView的富类型展示
+
+#### BadgeActivity
+展示badgeview的示例
+
+#### ProgressActivity
+展示自定义GradientProgressBar的效果
 
