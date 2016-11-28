@@ -35,8 +35,12 @@ public class GradientProgressBar extends View implements Runnable {
     @ColorInt
     private int textColor;
     private int progress;
-    private int max ;
+    private int max;
     private int viewWidth;
+    private int textMargin;
+    private int textSize;
+    /**滑块闪动频率 毫秒单位**/
+    private int flickRate;
     private Thread thread;
 
     /**
@@ -60,14 +64,17 @@ public class GradientProgressBar extends View implements Runnable {
 
     public GradientProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.GradientProgressBar);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.GradientProgressBar);
         try {
-            textColor = ta.getColor(R.styleable.GradientProgressBar_percentTextColor,Color.WHITE);
-            startColor = ta.getColor(R.styleable.GradientProgressBar_startColor,Color.parseColor("#b1f0fd"));
-            endColor = ta.getColor(R.styleable.GradientProgressBar_startColor,Color.parseColor("#5ce2ff"));
-            progress = ta.getInt(R.styleable.GradientProgressBar_progress,0);
-            max = ta.getInt(R.styleable.GradientProgressBar_max,100);
-        }finally {
+            textColor = ta.getColor(R.styleable.GradientProgressBar_percentTextColor, Color.WHITE);
+            startColor = ta.getColor(R.styleable.GradientProgressBar_startColor, Color.parseColor("#b1f0fd"));
+            endColor = ta.getColor(R.styleable.GradientProgressBar_startColor, Color.parseColor("#5ce2ff"));
+            progress = ta.getInt(R.styleable.GradientProgressBar_progress, 0);
+            max = ta.getInt(R.styleable.GradientProgressBar_max, 100);
+            flickRate = ta.getInt(R.styleable.GradientProgressBar_flickRate, 30);
+            textMargin = ta.getDimensionPixelSize(R.styleable.GradientProgressBar_textMargin,0);
+            textSize = ta.getDimensionPixelSize(R.styleable.GradientProgressBar_textSize,DensityUtils.dip2px(context,10));
+        } finally {
             ta.recycle();
         }
         gradientPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -86,7 +93,7 @@ public class GradientProgressBar extends View implements Runnable {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         viewWidth = w - getPaddingLeft() - getPaddingRight();
-        textPaint.setTextSize(h * 2 / 3);
+        textPaint.setTextSize(textSize);
     }
 
     @Override
@@ -101,8 +108,8 @@ public class GradientProgressBar extends View implements Runnable {
     private void drawProgressText(Canvas canvas) {
         final int progressRight = getPaddingLeft() + viewWidth * progress / max;
         final int textLength = viewWidth / 10;
-        final int offsetLength = viewWidth / 40;
-        final String progressText = progress * 100 / max + "%";
+        final int offsetLength = textMargin;
+        final String progressText = Math.min(progress * 100 / max,100) + "%";
         Rect targetRect = new Rect(progressRight - textLength - offsetLength, getPaddingTop(), progressRight - offsetLength, getHeight() - getPaddingBottom());
         Paint.FontMetricsInt fontMetrics = textPaint.getFontMetricsInt();
         int baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom - fontMetrics.top) / 2;
@@ -111,16 +118,17 @@ public class GradientProgressBar extends View implements Runnable {
     }
 
     private void drawProgress(Canvas canvas) {
-        LinearGradient _linearGradient = new LinearGradient(getPaddingLeft(), getHeight() / 2, getPaddingLeft() + viewWidth * progress / max, getHeight() / 2, startColor, endColor, Shader.TileMode.CLAMP);
+        float percent = Math.min(1,1.0f*progress/max);
+        LinearGradient _linearGradient = new LinearGradient(getPaddingLeft(), getHeight() / 2, getPaddingLeft() + viewWidth * percent, getHeight() / 2, startColor, endColor, Shader.TileMode.CLAMP);
         gradientPaint.setShader(_linearGradient);
         canvas.save(Canvas.CLIP_SAVE_FLAG);
         Path _path = new Path();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            _path.addRoundRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * progress / max, getHeight() - getPaddingBottom(), getHeight() / 2, getHeight() / 2, Path.Direction.CW);
-            canvas.drawRoundRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * progress / max, getHeight() - getPaddingBottom(), getHeight() / 2, getHeight() / 2, gradientPaint);
+            _path.addRoundRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * percent, getHeight() - getPaddingBottom(), getHeight() / 2, getHeight() / 2, Path.Direction.CW);
+            canvas.drawRoundRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * percent, getHeight() - getPaddingBottom(), getHeight() / 2, getHeight() / 2, gradientPaint);
         } else {
-            _path.addRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * progress / max, getHeight() - getPaddingBottom(), Path.Direction.CW);
-            canvas.drawRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * progress / max, getHeight() - getPaddingBottom(), bgPaint);
+            _path.addRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * percent, getHeight() - getPaddingBottom(), Path.Direction.CW);
+            canvas.drawRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * percent, getHeight() - getPaddingBottom(), bgPaint);
         }
 
         canvas.clipPath(_path);
@@ -134,15 +142,46 @@ public class GradientProgressBar extends View implements Runnable {
     private void drawBackground(Canvas canvas) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             canvas.drawRoundRect(getPaddingLeft(), getPaddingTop(), getWidth() - getPaddingRight(), getHeight() - getPaddingBottom(), getHeight() / 2, getHeight() / 2, bgPaint);
-            canvas.drawRoundRect(getPaddingLeft(), getPaddingTop(), getPaddingLeft() + viewWidth * progress / max, getHeight() - getPaddingBottom(), getHeight() / 2, getHeight() / 2, gradientPaint);
         } else {
             canvas.drawRect(getPaddingLeft(), getPaddingTop(), getWidth() - getPaddingRight(), getHeight() - getPaddingBottom(), bgPaint);
         }
     }
 
     public void setProgress(int progress) {
-        this.progress = progress;
+        this.progress = Math.min(progress,max);
         postInvalidate();
+    }
+
+    public void setStartColor(int startColor) {
+        this.startColor = startColor;
+    }
+
+    public void setEndColor(int endColor) {
+        this.endColor = endColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public void setViewWidth(int viewWidth) {
+        this.viewWidth = viewWidth;
+    }
+
+    public void setTextMargin(int textMargin) {
+        this.textMargin = textMargin;
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+    }
+
+    public void setFlickRate(int flickRate) {
+        this.flickRate = flickRate;
     }
 
     @Override
@@ -150,13 +189,13 @@ public class GradientProgressBar extends View implements Runnable {
         int width = flikerBitmap.getWidth();
         try {
             while (!thread.isInterrupted()) {
-//                flickerLeft += DensityUtils.dip2px(getContext(), 5);
+                flickerLeft += DensityUtils.dip2px(getContext(), 5);
                 float progressWidth = (1.0f * progress / max) * viewWidth;
                 if (flickerLeft >= progressWidth) {
                     flickerLeft = -width;
                 }
                 postInvalidate();
-                Thread.sleep(30);
+                Thread.sleep(flickRate);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

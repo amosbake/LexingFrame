@@ -6,5 +6,8 @@
         <attr name="endColor" format="color"/>
         <attr name="progress" format="integer"/>
         <attr name="max" format="integer"/>
+        <attr name="flickRate" format="integer"/>
+        <attr name="textMargin" format="dimension"/>
+        <attr name="textSize" format="dimension"/>
     </declare-styleable>
 </resources>
