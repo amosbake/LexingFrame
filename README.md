@@ -51,6 +51,7 @@ Class | Introduction
 [ViewUtils](https://github.com/amosbake/LexingFrame/blob/master/common/src/main/java/com/lexing/common/utils/ViewUtils.java) | 方便视图操作(检测事件,删除子视图,截图,popupwindow)
 [Check](https://github.com/amosbake/LexingFrame/blob/master/common/src/main/java/com/lexing/common/assist/Check.java) | 对字符串,集合,数组的判空方法
 [CrashHandler](https://github.com/amosbake/LexingFrame/blob/master/common/src/main/java/com/lexing/common/assist/CrashHandler.java) | 程序错误跳出时给予提示并记录错误报告
+[Rotate3dAnimtion](https://github.com/amosbake/LexingFrame/blob/master/common/src/main/java/com/lexing/common/assist/Rotate3dAnimation.java) | 一个3d翻转效果的动画
 
 ## BadgeView
 BadgeView 是一个右上角带有小红点或数字的控件

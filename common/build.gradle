@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 group = "com.lexing.common"
-version = "0.3.1"
+version = "0.3.2"
 
 android {
     compileSdkVersion 25
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 8
+        versionCode 9
         versionName version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
