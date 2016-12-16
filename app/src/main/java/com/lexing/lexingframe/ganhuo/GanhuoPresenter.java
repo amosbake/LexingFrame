@@ -62,13 +62,4 @@ public class GanhuoPresenter implements IGanhuoPresenter {
                 });
     }
 
-    @Override
-    public void subscribe() {
-
-    }
-
-    @Override
-    public void unsubscribe() {
-        mGanhuoService = null;
-    }
 }
