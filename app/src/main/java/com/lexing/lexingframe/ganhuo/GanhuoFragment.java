@@ -1,8 +1,8 @@
 package com.lexing.lexingframe.ganhuo;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +38,6 @@ public class GanhuoFragment extends Fragment implements GanhuoView{
         L.init(true, "ganhuo");
         View _view = inflater.inflate(R.layout.fragment_ganhuo, container, false);
         mIGanhuoPresenter = new GanhuoPresenter(ServiceGenerator.ganhuoService(),this);
-        mIGanhuoPresenter.subscribe();
         initViews(_view);
         return _view;
     }
@@ -52,16 +51,15 @@ public class GanhuoFragment extends Fragment implements GanhuoView{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mIGanhuoPresenter.unsubscribe();
     }
 
     private void initViews(View rootView) {
         mRecyclerView = (XRecyclerView) rootView.findViewById(R.id.recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-        View header = LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_header, (ViewGroup) getActivity().findViewById(R.id.container), false);
+        View header = LayoutInflater.from(getActivity()).inflate(R.layout.recyclerview_header, (ViewGroup) getActivity().findViewById(R.id.container), false);
         mRecyclerView.addHeaderView(header);
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override

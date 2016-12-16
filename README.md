@@ -18,10 +18,14 @@ LexingFrame provides general purpose utilities for Android projects.focus on eff
 
 模块的 build.gradle 文件中添加
 ```gradle
-    compile 'com.lexing.common:common:0.3.1'
-    compile 'com.lexing.common:badgeview:1.0.0'
-    compile 'com.lexing.common:lrecyclerview:1.3.2'
-    compile 'com.lexing.common:lprogressbarcollection:0.8.0'
+    /**基本模块**/
+    compile 'com.lexing.common:common:0.3.6'
+    /**小红点控件**/
+    compile 'com.lexing.common:badgeview:1.0.1'
+    /**富类型显示的RecyclerView,包括下拉刷新和加载更多**/
+    compile 'com.lexing.common:lrecyclerview:1.3.3'
+    /**自定义进度条**/
+    compile 'com.lexing.common:lprogressbarcollection:0.8.1'
 ```
 
 ## 添加Permission
@@ -172,11 +176,13 @@ public class TitleItemProvider extends ItemViewProvider<TitleData, RecyclerHolde
 ## 示例项目
 #### ganhuo:  Rxjava+retrofit
 `ExecutorManager`提供基于手机cpu数量大小的线程池
-`SchedlersCompat`使得线程调度的写法更加简洁
+
+`SchedlersCompat`使得Rxjava中线程调度的写法更加简洁
+
 `ServiceGenerator`是提供`Retrofit`网络服务的一般性写法,使用时只用加上主域名和接口api即可使用
 
 #### GalleryFragment
-展示MutiType,RecylerView的富类型展示
+RecylerView的基于MutiType的富类型展示
 
 #### BadgeActivity
 展示badgeview的示例
